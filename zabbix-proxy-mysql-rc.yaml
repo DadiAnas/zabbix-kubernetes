@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: zabbix-proxy-mysql
+  labels:
+    app: zabbix
+    tier: proxy
+  namespace: zabbix
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: zabbix-proxy-mysql
+        app: zabbix
+    spec:
+      containers:
+        - name: zabbix-proxy-mysql
+          image: zabbix/zabbix-proxy-mysql:alpine-5.2-latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 10051
+            protocol: TCP
+            name: zabbix-trapper
+          env:
+          - name: MYSQL_USER
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-user
+          - name: MYSQL_PASSWORD
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-pass
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-root-pass
+          - name: MYSQL_DATABASE
+            value: "zabbix_proxy"

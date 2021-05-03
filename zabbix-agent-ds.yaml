@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: zabbix-agent
+  labels:
+    app: zabbix
+    tier: agent
+  namespace: zabbix
+spec:
+  selector:
+   matchLabels:
+    name: zabbix-agent
+  updateStrategy:
+   type: RollingUpdate
+   rollingUpdate:
+    maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        name: zabbix-agent
+        app: zabbix
+    spec:
+      containers:
+        - name: zabbix-agent
+          image: zabbix/zabbix-agent:alpine-5.2-latest
+          imagePullPolicy: Always
+          resources:
+           limits:
+            cpu: 100m
+            memory: 54Mi
+           requests:
+            cpu: 100m
+            memory: 54Mi
+          ports:
+          - containerPort: 10050
+            name: zabbix-agent
+          env:
+          - name: ZBX_SERVER_HOST
+            value: "zabbix-server"
+          - name: ZBX_PASSIVE_ALLOW
+            value: "true"
+          - name: ZBX_STARTAGENTS
+            value: "3"
+          - name: ZBX_TIMEOUT
+            value: "10"
+          securityContext:
+            privileged: true
