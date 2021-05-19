@@ -10,5 +10,7 @@ spec:
   - port: 10050
     targetPort: 10050
     name: zabbix-agent
+  externalIPs:
+  - <Specify external IP here>
   selector:
     name: zabbix-agent

@@ -10,5 +10,7 @@ spec:
   - port: 10052
     targetPort: 10052
     name: zabbix-jmx
+  externalIPs:
+  - <Specify external IP here>
   selector:
     name: zabbix-java-gateway

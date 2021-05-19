@@ -11,5 +11,7 @@ spec:
   - port: 3306
     targetPort: 3306
     name: mysql-server
+  externalIPs:
+  - <Specify external IP here>
   selector:
     name: mysql-server

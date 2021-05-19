@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: zabbix-proxy-mysql
-          image: zabbix/zabbix-proxy-mysql:alpine-5.2-latest
+          image: zabbix/zabbix-proxy-mysql:centos-5.2-latest
           imagePullPolicy: Always
           ports:
           - containerPort: 10051

@@ -13,7 +13,7 @@ spec:
   - port: 443
     targetPort: 8443
     name: web-https
+  externalIPs:
+  - <Specify external IP here>
   selector:
     name: zabbix-web
-  externalIPs:
-  - 10.242.148.33
