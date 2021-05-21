@@ -1,4 +1,4 @@
-FROM centos/systemd:8
+FROM centos/:8
 COPY . /postgres
 WORKDIR /postgres
 
@@ -18,7 +18,7 @@ RUN sed -i 's/host    all             all             127.0.0.1\/32            i
 RUN sed -i 's/host    all             all             ::1\/128                 ident/host    all             all             ::1\/128                 trust/' /var/lib/pgsql/data/pg_hba.conf
 
 # Create initial database
-RUN systemctl start postgresql
+#RUN systemctl start postgresql
 RUN -u postgres createuser zabbix
 RUN -u postgres createdb -O zabbix zabbix
 RUN zcat /usr/share/doc/zabbix-server-pgsql*/create.sql.gz | RUN -u zabbix psql zabbix
