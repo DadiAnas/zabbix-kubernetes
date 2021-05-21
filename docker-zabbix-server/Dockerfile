@@ -17,6 +17,5 @@ RUN dnf install zabbix-server-pgsql sed -y
 RUN sed -i "s/# DBHost=localhost/# DBhost=localhost\n\nDBHost=${DBHost}/" /etc/zabbix/zabbix_server.conf
 RUN sed -i 's/# DBPassword=/# DBPassword=\n\nDBPassword=zabbix/' /etc/zabbix/zabbix_server.conf
 
-# Start Zabbix server 
-RUN ./etc/init.d/zabbix-server restart
-RUN ./etc/init.d/zabbix-server enable
+# display zabbix-server conf file
+RUN cat /etc/zabbix/zabbix_server.conf
