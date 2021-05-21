@@ -5,7 +5,7 @@ ARG DBHost=localhost
 
 ## Install Zabbix server, sed
 RUN chmod +x zabbix-pgsql.sh
-ENTRYPOINT [ "zabbix-pgsql.sh" ]
+ENTRYPOINT [ "./zabbix-pgsql.sh" ]
 
 # config zabbix-server host and password
 RUN sudo sed -i "s/# DBHost=localhost/# DBhost=localhost\n\nDBHost=${DBHost}/" /etc/zabbix/zabbix_server.conf
