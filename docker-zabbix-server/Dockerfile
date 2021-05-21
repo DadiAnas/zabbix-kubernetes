@@ -18,5 +18,5 @@ RUN sed -i "s/# DBHost=localhost/# DBhost=localhost\n\nDBHost=${DBHost}/" /etc/z
 RUN sed -i 's/# DBPassword=/# DBPassword=\n\nDBPassword=zabbix/' /etc/zabbix/zabbix_server.conf
 
 # Start Zabbix server 
-RUN service zabbix-server restart
-RUN service zabbix-server enable
+RUN ./etc/init.d/zabbix-server restart
+RUN ./etc/init.d/zabbix-server enable
