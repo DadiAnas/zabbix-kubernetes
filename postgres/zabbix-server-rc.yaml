@@ -17,25 +17,15 @@ spec:
     spec:
       containers:
         - name: zabbix-server
-          image: zabbix/zabbix-server-pgsql:alpine-5.4-latest
+          image: zabbix/zabbix-server-pgsql:ubuntu-5.4-latest
           imagePullPolicy: Always
           ports:
           - containerPort: 10051
             protocol: TCP
             name: zabbix-trapper
-          readinessProbe:
-            tcpSocket:
-              port: zabbix-trapper
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            tcpSocket:
-              port: zabbix-trapper
-            initialDelaySeconds: 15
-            periodSeconds: 20
           env:
           - name: DB_SERVER_HOST  
-            value: "postgres-server"
+            value: "<Specify DB external IP here>"
           - name: POSTGRES_USER
             valueFrom:
              secretKeyRef:
