@@ -35,7 +35,7 @@ spec:
             periodSeconds: 20
           env:
           - name: DB_SERVER_HOST  
-           value: "postgres-server"
+            value: "postgres-server"
           - name: POSTGRES_USER
             valueFrom:
              secretKeyRef:
