@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: zabbix-server
-          image: zabbix/zabbix-server-mysql:centos-5.2-latest
+          image: zabbix/zabbix-server-pgsql:alpine-5.4-latest
           imagePullPolicy: Always
           ports:
           - containerPort: 10051
@@ -34,22 +34,19 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 20
           env:
-          - name: MYSQL_USER
+          - name: DB_SERVER_HOST  
+           value: "postgres-server"
+          - name: POSTGRES_USER
             valueFrom:
              secretKeyRef:
               name: db-secret
               key: db-zbx-user
-          - name: MYSQL_PASSWORD
+          - name: POSTGRES_PASSWORD
             valueFrom:
              secretKeyRef:
               name: db-secret
               key: db-zbx-pass
-          - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-             secretKeyRef:
-              name: db-secret
-              key: db-root-pass
-          - name: MYSQL_DATABASE
+          - name: POSTGRES_DB
             value: "zabbix"
           - name: ZBX_JAVAGATEWAY_ENABLE
             value: "true"
@@ -66,7 +63,7 @@ spec:
             mountPath: /var/lib/zabbix/snmptraps/
             readOnly: true
         - name: zabbix-snmptraps
-          image: zabbix/zabbix-snmptraps:centos-5.2-latest
+          image: zabbix/zabbix-snmptraps:alpine-5.4-latest
           imagePullPolicy: Always
           ports:
           - containerPort: 1162

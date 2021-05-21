@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-server
+  labels:
+    app: zabbix
+    tier: db
+  namespace: zabbix
+spec:
+  ports:
+  - port: 5432
+    targetPort: 5432
+    name: postgres-server
+  externalIPs:
+  - <Specify external IP here>
+  selector:
+    name: postgres-server

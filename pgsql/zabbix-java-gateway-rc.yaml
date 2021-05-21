@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: zabbix-java-gateway
+  labels:
+    app: zabbix
+    tier: java
+  namespace: zabbix
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: zabbix-java-gateway
+        app: zabbix
+    spec:
+      containers:
+        - name: zabbix-java-gateway
+          image: zabbix/zabbix-java-gateway:alpine-5.4-latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 10052
+            protocol: TCP
+            name: zabbix-jmx
+          env:
+          - name: ZBX_TIMEOUT
+            value: "5"
