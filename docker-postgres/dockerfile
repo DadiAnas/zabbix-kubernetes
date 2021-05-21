@@ -1,4 +1,4 @@
-FROM centos:7
+FROM alekseychudov/centos8-systemd
 COPY . /postgres
 WORKDIR /postgres
 
