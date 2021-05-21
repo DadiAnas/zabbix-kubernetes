@@ -17,11 +17,6 @@ RUN dnf install zabbix-server-pgsql sed -y
 RUN sed -i "s/# DBHost=localhost/# DBhost=localhost\n\nDBHost=${DBHost}/" /etc/zabbix/zabbix_server.conf
 RUN sed -i 's/# DBPassword=/# DBPassword=\n\nDBPassword=zabbix/' /etc/zabbix/zabbix_server.conf
 
-
-#change selinux from enforce to permissive
-RUN setenforce 0
-RUN sed -i 's/SELINUX=enforcing/SELINUX=permissive/'  /etc/selinux/config
-
 # Start Zabbix server 
 RUN systemctl restart zabbix-server
 RUN systemctl enable zabbix-server 
