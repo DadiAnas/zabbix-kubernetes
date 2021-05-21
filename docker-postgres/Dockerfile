@@ -3,8 +3,9 @@ FROM ubuntu:20.04
 COPY . /postgres
 WORKDIR /postgres
 
-RUN apt update && apt upgrade
-RUN apt install wget -y
+RUN  apt-get update \
+    && apt-get install -y wget \
+    && rm -rf /var/lib/apt/lists/*
 # Install Zabbix repository 
 RUN wget https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+focal_all.deb
 RUN dpkg -i zabbix-release_5.0-1+focal_all.deb
