@@ -1,13 +1,13 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: grafana-data
+  name: grafana-storage
   labels:
     type: local
   namespace: grafana
 spec:
   capacity:
-    storage: 2Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteMany
   hostPath:

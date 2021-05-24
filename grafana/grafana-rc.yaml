@@ -15,15 +15,15 @@ spec:
     spec: 
       containers:
         - name: grafana
-          image: grafana/grafana:latest
+          image: monitoringartist/grafana-xxl
           ports:
             - containerPort: 3000
               name: http-grafana
           volumeMounts:
             - mountPath: /var/lib/grafana
-              name: grafana-pv
+              name: grafana-storage
               readOnly: false
       volumes:
-        - name: grafana-pv
+        - name: grafana-storage
           persistentVolumeClaim:
-            claimName: grafana-pvc
+            claimName: grafana-grafana-storage-claim
