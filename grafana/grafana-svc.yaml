@@ -10,6 +10,7 @@ spec:
   - port: 3000
     targetPort: 3000
     name: grafana-http
+  type: NodePort
   externalIPs:
   - <Specify external IP here>
   selector:

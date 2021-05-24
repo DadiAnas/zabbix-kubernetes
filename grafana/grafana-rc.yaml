@@ -12,15 +12,10 @@ spec:
       labels:
         name: grafana
         app: grafana
-    spec:
-      securityContext:
-        fsGroup: 472
-        supplementalGroups:
-        - 0    
+    spec: 
       containers:
         - name: grafana
           image: grafana/grafana:latest
-          imagePullPolicy: Always
           ports:
             - containerPort: 3000
               name: http-grafana
