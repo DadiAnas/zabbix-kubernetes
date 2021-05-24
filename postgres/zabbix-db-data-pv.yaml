@@ -1,7 +1,7 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: zabbix-db-data
+  name: zabbix-db-storage
   labels:
     type: local
   namespace: zabbix
@@ -9,6 +9,6 @@ spec:
   capacity:
     storage: 5Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   hostPath:
-    path: "/data"
+    path: "/zabbix_db_storage"

@@ -1,12 +1,12 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: zabbix-db-data-claim
+  name: zabbix-db-storage-claim
   namespace: zabbix
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 5Gi
-  volumeName: zabbix-db-data
+  volumeName: zabbix-db-storage

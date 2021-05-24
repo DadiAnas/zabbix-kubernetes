@@ -16,9 +16,9 @@ spec:
         tier: postgres-server
     spec:
       volumes:
-       - name: zabbix-db-data
+       - name: zabbix-db-storage
          persistentVolumeClaim:
-          claimName: zabbix-db-data-claim
+          claimName: zabbix-db-storage-claim
       containers:
         - name: zabbix-db
           image: postgres:latest
@@ -40,5 +40,5 @@ spec:
             value: "zabbix"
           volumeMounts:
            - mountPath: "/var/lib/postgres/"
-             name: zabbix-db-data
+             name: zabbix-db-storage
              readOnly: false
