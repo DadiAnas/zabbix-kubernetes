@@ -1,17 +1,19 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: ReplicationController
 metadata:
+  name: grafana
   labels:
     app: grafana
-  name: grafana
   namespace: grafana
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: grafana
   template:
     metadata:
       labels:
+        name: grafana
         app: grafana
     spec:
       securityContext:
@@ -20,17 +22,16 @@ spec:
         - 0    
       containers:
         - name: grafana
-          image: grafana/grafana:7.5.2
+          image: grafana/grafana:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
               name: http-grafana
-              protocol: TCP
           readinessProbe:
             failureThreshold: 3
             httpGet:
               path: /robots.txt
-              port: 3000
+              port: http-grafana
               scheme: HTTP
             initialDelaySeconds: 10
             periodSeconds: 30
@@ -51,6 +52,7 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/grafana
               name: grafana-pv
+              readOnly: false
       volumes:
         - name: grafana-pv
           persistentVolumeClaim:
