@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: zabbix-java-gateway
-          image: zabbix/zabbix-java-gateway:alpine-5.2-latest
+          image: zabbix/zabbix-java-gateway:alpine-5.4-latest
           imagePullPolicy: Always
           ports:
           - containerPort: 10052

@@ -54,7 +54,7 @@ spec:
     spec:
       containers:
         - name: zabbix-web
-          image: zabbix/zabbix-web-nginx-mysql:alpine-5.2-latest
+          image: zabbix/zabbix-web-nginx-mysql:alpine-5.4-latest
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
