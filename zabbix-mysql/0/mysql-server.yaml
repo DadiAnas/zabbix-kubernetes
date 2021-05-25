@@ -64,7 +64,7 @@ spec:
     spec:
       containers:
         - name: zabbix-db
-          image: mysql:8.0
+          image: mysql:5.7
           ports:
           - containerPort: 3306
             name: mysql

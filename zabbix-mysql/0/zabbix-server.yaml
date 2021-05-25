@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: zabbix-server
-          image: zabbix/zabbix-server-mysql:alpine-5.2-latest
+          image: zabbix/zabbix-server-mysql:alpine-5.4-latest
           imagePullPolicy: Always
           ports:
           - containerPort: 10051
@@ -89,7 +89,7 @@ spec:
             mountPath: /var/lib/zabbix/snmptraps/
             readOnly: true
         - name: zabbix-snmptraps
-          image: zabbix/zabbix-snmptraps:alpine-5.2-latest
+          image: zabbix/zabbix-snmptraps:alpine-4.2-latest
           imagePullPolicy: Always
           ports:
           - containerPort: 1162
