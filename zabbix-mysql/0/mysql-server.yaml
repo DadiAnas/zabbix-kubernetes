@@ -55,39 +55,15 @@ metadata:
 data:
   my.cnf: |-
     [client]
-    port   = 3306
-    socket   = /var/run/mysqld/mysqld.sock
-    default-character-set=utf8
+    default-character-set=utf8mb4
+    
     [mysql]
-    default-character-set=utf8
-    [mysqld_safe]
-    pid-file = /var/run/mysqld/mysqld.pid
-    socket   = /var/run/mysqld/mysqld.sock
-    nice   = 0
+    default-character-set=utf8mb4
+
     [mysqld]
-    user   = mysql
-    pid-file = /var/run/mysqld/mysqld.pid
-    socket   = /var/run/mysqld/mysqld.sock
-    port   = 3306
-    basedir    = /usr
-    datadir    = /var/lib/mysql
-    tmpdir   = /tmp
-    lc-messages-dir  = /usr/share/mysql
-    explicit_defaults_for_timestamp
-    collation-server = utf8_unicode_ci
-    init-connect='SET NAMES utf8'
-    character-set-server = utf8
-    log-error  = /var/log/mysql/error.log
-    # Recommended in standard MySQL setup
-    sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
-    # Disabling symbolic-links is recommended to prevent assorted security risks
-    symbolic-links=0
-    # This increase of max_connections from the default of 151 to 1024 has been
-    # tested as adequate for an environment with up to 24 API/Worker/Collector
-    # components (8 of each) and 4000 Agents of incoming traffic. The MySQL
-    # container also consumed as much as 1 GB of memory in this test.
-    max_connections=1024
-    !includedir /etc/mysql/conf.d/
+    collation-server = utf8mb4_unicode_520_ci
+    init-connect='SET NAMES utf8mb4'
+    character-set-server = utf8mb4
 ---
 apiVersion: v1
 kind: ReplicationController
