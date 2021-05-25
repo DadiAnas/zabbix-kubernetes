@@ -51,6 +51,7 @@ metadata:
   name: mysql-config
   labels:
     app: mysql-server
+  namespace: zabbix
 data:
   my.cnf: |-
     [client]
