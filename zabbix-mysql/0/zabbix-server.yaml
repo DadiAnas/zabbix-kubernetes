@@ -58,11 +58,20 @@ spec:
           - name: DB_SERVER_HOST  
             value: "mysql-server"
           - name: MYSQL_USER
-            value: "zabbix"
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-user
           - name: MYSQL_PASSWORD
-            value: "zabbix"
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-pass
           - name: MYSQL_ROOT_PASSWORD
-            value: "Zabbix.123"
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-root-pass
           - name: MYSQL_DATABASE
             value: "zabbix"
           - name: ZBX_JAVAGATEWAY_ENABLE

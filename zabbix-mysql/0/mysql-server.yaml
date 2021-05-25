@@ -64,17 +64,26 @@ spec:
     spec:
       containers:
         - name: zabbix-db
-          image: mysql:latest
+          image: mysql:8.0
           ports:
           - containerPort: 3306
             name: mysql
           env:
           - name: MYSQL_USER
-            value: "zabbix"
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-user
           - name: MYSQL_PASSWORD
-            value: "zabbix"
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-pass
           - name: MYSQL_ROOT_PASSWORD
-            value: "Zabbix.123"
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-root-pass
           - name: MYSQL_DATABASE
             value: "zabbix"
           volumeMounts:
