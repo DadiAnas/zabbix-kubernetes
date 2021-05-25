@@ -69,10 +69,11 @@ data:
     nice   = 0
 
     [mysqld]
-    user   = mysql
+    user   = root
     pid-file = /tmp/mysqld.pid
     socket   = /tmp/mysqld.sock
     port   = 3306
+    bind-address     = 0.0.0.0
     basedir    = /usr
     datadir    = /var/lib/mysql
     tmpdir   = /tmp
@@ -87,14 +88,14 @@ data:
 
     #log-error  = /var/log/mysql/error.log
     # Recommended in standard MySQL setup
-    sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+    #sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
     # Disabling symbolic-links is recommended to prevent assorted security risks
     #symbolic-links=0
     # This increase of max_connections from the default of 151 to 1024 has been
     # tested as adequate for an environment with up to 24 API/Worker/Collector
     # components (8 of each) and 4000 Agents of incoming traffic. The MySQL
     # container also consumed as much as 1 GB of memory in this test.
-    max_connections=1024
+    #max_connections=1024
     !includedir /etc/mysql/conf.d/
 ---
 apiVersion: v1
