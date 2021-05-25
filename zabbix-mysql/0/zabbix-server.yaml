@@ -58,20 +58,11 @@ spec:
           - name: DB_SERVER_HOST  
             value: "mysql-server"
           - name: MYSQL_USER
-            valueFrom:
-             secretKeyRef:
-              name: db-secret
-              key: db-zbx-user
+            value: "zabbix"
           - name: MYSQL_PASSWORD
-            valueFrom:
-             secretKeyRef:
-              name: db-secret
-              key: db-zbx-pass
+            value: "zabbix"
           - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-             secretKeyRef:
-              name: db-secret
-              key: db-root-pass
+            value: "Zabbix.123"
           - name: MYSQL_DATABASE
             value: "zabbix"
           - name: ZBX_JAVAGATEWAY_ENABLE
@@ -89,7 +80,7 @@ spec:
             mountPath: /var/lib/zabbix/snmptraps/
             readOnly: true
         - name: zabbix-snmptraps
-          image: zabbix/zabbix-snmptraps:centos-5.2-latest
+          image: zabbix/zabbix-snmptraps:alpine-5.2-latest
           imagePullPolicy: Always
           ports:
           - containerPort: 1162
