@@ -107,7 +107,7 @@ spec:
     spec:
       containers:
         - name: zabbix-db
-          image: mysql:8.0
+          image: quay.io/sysdig/mysql:5.6.44.0
           ports:
           - containerPort: 3306
             name: mysql
