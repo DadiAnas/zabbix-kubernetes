@@ -64,17 +64,27 @@ spec:
     spec:
       containers:
         - name: zabbix-db
-          image: mysql:5.7
+          image: monitoringartist/zabbix-db-mariadb
           ports:
           - containerPort: 3306
             name: mysql
           env:
+          - name: MARIADB_USER
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-user
           - name: MYSQL_USER
             valueFrom:
              secretKeyRef:
               name: db-secret
               key: db-zbx-user
           - name: MYSQL_PASSWORD
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-pass
+          - name: MARIADB_PASS
             valueFrom:
              secretKeyRef:
               name: db-secret
