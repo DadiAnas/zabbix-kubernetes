@@ -46,6 +46,49 @@ spec:
   volumeName: zabbix-db-storage
 ---
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+  labels:
+    app: mysql-server
+data:
+  my.cnf: |-
+    [client]
+    port   = 3306
+    socket   = /var/run/mysqld/mysqld.sock
+    default-character-set=utf8
+    [mysql]
+    default-character-set=utf8
+    [mysqld_safe]
+    pid-file = /var/run/mysqld/mysqld.pid
+    socket   = /var/run/mysqld/mysqld.sock
+    nice   = 0
+    [mysqld]
+    user   = zabbix
+    pid-file = /var/run/mysqld/mysqld.pid
+    socket   = /var/run/mysqld/mysqld.sock
+    port   = 3306
+    basedir    = /usr
+    datadir    = /var/lib/mysql
+    tmpdir   = /tmp
+    lc-messages-dir  = /usr/share/mysql
+    explicit_defaults_for_timestamp
+    collation-server = utf8_unicode_ci
+    init-connect='SET NAMES utf8'
+    character-set-server = utf8
+    log-error  = /var/log/mysql/error.log
+    # Recommended in standard MySQL setup
+    sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+    # Disabling symbolic-links is recommended to prevent assorted security risks
+    symbolic-links=0
+    # This increase of max_connections from the default of 151 to 1024 has been
+    # tested as adequate for an environment with up to 24 API/Worker/Collector
+    # components (8 of each) and 4000 Agents of incoming traffic. The MySQL
+    # container also consumed as much as 1 GB of memory in this test.
+    max_connections=1024
+    !includedir /etc/mysql/conf.d/
+---
+apiVersion: v1
 kind: ReplicationController
 metadata:
   name: mysql-server
@@ -65,7 +108,6 @@ spec:
       containers:
         - name: zabbix-db
           image: mysql:8.0
-          command: ["--character-set-server=utf8 --collation-server=utf8_bin"]
           ports:
           - containerPort: 3306
             name: mysql
@@ -91,7 +133,13 @@ spec:
            - mountPath: "/var/lib/mysql/"
              name: zabbix-db-storage
              readOnly: false
+           - mountPath: "/etc/mysql/my.cnf"
+             name: mysql-config
+             subPath: my.cnf
       volumes:
        - name: zabbix-db-storage
          persistentVolumeClaim:
           claimName: zabbix-db-storage-claim
+       - name: mysql-config
+         configMap:
+            name: mysql-config
