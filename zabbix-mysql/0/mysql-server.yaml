@@ -64,7 +64,7 @@ spec:
     spec:
       containers:
         - name: zabbix-db
-          image: mysql:5.7
+          image: mysql:8.0
           ports:
           - containerPort: 3306
             name: mysql
@@ -88,9 +88,9 @@ spec:
             value: "zabbix"
           volumeMounts:
            - mountPath: "/var/lib/mysql/"
-             name: zabbix-mysql-data
+             name: zabbix-db-storage
              readOnly: false
       volumes:
-       - name: zabbix-mysql-data
+       - name: zabbix-db-storage
          persistentVolumeClaim:
-          claimName: zabbix-mysql-data-claim
+          claimName: zabbix-db-storage-claim
