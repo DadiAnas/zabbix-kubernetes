@@ -35,7 +35,7 @@ spec:
             periodSeconds: 20
           env:
           - name: DB_SERVER_HOST  
-           value: "mysql-server"
+            value: "mysql-server"
           - name: MYSQL_USER
             valueFrom:
              secretKeyRef:

@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zabbix-proxy-sqlite3
+  labels:
+    app: zabbix
+  namespace: zabbix
+spec:
+  ports:
+  - port: 10051
+    targetPort: 10051
+    name: zabbix-trapper
+  - port: 162
+    targetPort: 1162
+    protocol: UDP
+    name: snmp-trap
+  selector:
+    name: zabbix-proxy-sqlite3
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: zabbix-proxy-sqlite3
+  labels:
+    app: zabbix
+    tier: proxy
+  namespace: zabbix
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: zabbix-proxy-sqlite3
+        app: zabbix
+    spec:
+      containers:
+        - name: zabbix-proxy-sqlite3
+          image: zabbix/zabbix-proxy-sqlite3:alpine-5.2-latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 10051
+            protocol: TCP
+            name: zabbix-trapper
+          env:
+          - name: ZBX_HOSTNAME
+            value: "zabbix-proxy-passive"
+          - name: ZBX_CONFIGFREQUENCY
+            value: "60"
+          - name: ZBX_PROXYMODE
+            value: "1"
