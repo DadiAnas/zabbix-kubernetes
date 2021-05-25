@@ -65,7 +65,7 @@ data:
     socket   = /var/run/mysqld/mysqld.sock
     nice   = 0
     [mysqld]
-    user   = zabbix
+    user   = mysql
     pid-file = /var/run/mysqld/mysqld.pid
     socket   = /var/run/mysqld/mysqld.sock
     port   = 3306
