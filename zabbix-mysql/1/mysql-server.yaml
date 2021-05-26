@@ -17,6 +17,24 @@ spec:
   selector:
     name: mysql-server
 ---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mysql-server
+  namespace: zabbix
+spec:
+  scaleTargetRef:
+    apiVersion: v1
+    kind: ReplicationController
+    name: mysql-server
+  minReplicas: 2
+  maxReplicas: 4
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 70
+---
 kind: PersistentVolume
 apiVersion: v1
 metadata:
