@@ -26,3 +26,5 @@ sed -i -e "s/<Specify external IP here>/${WEB_HOST_IP}/" ./*.yaml
 ```
 
 `kubectl apply -f zabbix-kubernetes/`
+
+kubectl -n zabbix delete po $(kubectl -n zabbix get po | grep mysql-server | awk '{print $1}')

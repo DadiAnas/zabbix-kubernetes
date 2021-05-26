@@ -7,7 +7,7 @@ metadata:
   namespace: zabbix
 spec:
   externalIPs:
-  - <Specify PROXY external PORT here>
+  - <Specify PROXY external IP here>
   ports:
   - port: 10051
     targetPort: 10051
