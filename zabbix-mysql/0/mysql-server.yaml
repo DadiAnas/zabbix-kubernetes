@@ -55,48 +55,18 @@ metadata:
 data:
   my.cnf: |-
     [client]
-    port   = 3306
-    socket   = /tmp/mysql.sock
     default-character-set=utf8mb4
-    password="zabbix"
 
     [mysql]
     default-character-set=utf8mb4
 
-    [mysqld_safe]
-    pid-file = /tmp/mysqld.pid
-    socket   = /tmp/mysql.sock
-    nice   = 0
 
     [mysqld]
-    user   = root
-    pid-file = /tmp/mysqld.pid
-    socket   = /tmp/mysqld.sock
-    port   = 3306
-    bind-address     = 0.0.0.0
-    basedir    = /usr
-    datadir    = /var/lib/mysql
-    tmpdir   = /tmp
-    lc-messages-dir  = /usr/share/mysql-8.0
-    lc-messages  = en_US
-    explicit_defaults_for_timestamp
     collation-server = utf8mb4_unicode_520_ci
     init-connect='SET NAMES utf8mb4'
     character-set-server = utf8mb4
-    secure-file-priv= NULL
-    sql_mode=TRADITIONAL
 
-    #log-error  = /var/log/mysql/error.log
-    # Recommended in standard MySQL setup
-    #sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
-    # Disabling symbolic-links is recommended to prevent assorted security risks
-    #symbolic-links=0
-    # This increase of max_connections from the default of 151 to 1024 has been
-    # tested as adequate for an environment with up to 24 API/Worker/Collector
-    # components (8 of each) and 4000 Agents of incoming traffic. The MySQL
-    # container also consumed as much as 1 GB of memory in this test.
-    #max_connections=1024
-    !includedir /etc/mysql/conf.d/
+    secure-file-priv= NULL
 ---
 apiVersion: v1
 kind: ReplicationController
@@ -137,10 +107,8 @@ spec:
              secretKeyRef:
               name: db-secret
               key: db-root-pass
-          - name: MYSQL_DATABASE
-            value: "zabbix"
           volumeMounts:
-           - mountPath: "/var/lib/mysql/"
+           - mountPath: "/var/lib/mysql-files/"
              name: zabbix-db-storage
              readOnly: false
            - mountPath: "/etc/mysql/my.cnf"
