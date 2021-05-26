@@ -19,6 +19,24 @@ spec:
   selector:
     name: zabbix-server
 ---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: zabbix-server
+  namespace: zabbix
+spec:
+  scaleTargetRef:
+    apiVersion: v1
+    kind: ReplicationController
+    name: zabbix-server
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 70
+---
 apiVersion: v1
 kind: ReplicationController
 metadata:

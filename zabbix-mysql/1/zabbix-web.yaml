@@ -1,4 +1,42 @@
 apiVersion: v1
+kind: Service
+metadata:
+  name: zabbix-web
+  labels:
+    app: zabbix
+  namespace: zabbix
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: web-http
+  - port: 443
+    targetPort: 8443
+    name: web-https
+  externalIPs:
+  - <Specify WEB external IP here>
+  selector:
+    name: zabbix-web
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: zabbix-web
+  namespace: zabbix
+spec:
+  scaleTargetRef:
+    apiVersion: v1
+    kind: ReplicationController
+    name: zabbix-web
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 70
+---
+apiVersion: v1
 kind: ReplicationController
 metadata:
   name: zabbix-web
@@ -51,10 +89,30 @@ spec:
             successThreshold: 1
             failureThreshold: 5
           env:
+          - name: ZBX_SERVER_HOST
+            value: "<Specify ZX external IP here>"
+          - name: ZBX_SERVER_PORT
+            value: "<Specify ZX external PORT here>"
           - name: ZBX_SERVER_NAME
-            value: "Zabbix kubernetes"
+            value: "Zabbix server"
           - name: PHP_TZ
             value: "Africa/Casablanca"
+          - name: DB_SERVER_USER
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-user
+          - name: DB_SERVER_PASS
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-pass
+          - name: DB_SERVER_HOST
+            value: "<Specify DB external IP here>"
+          - name: DB_SERVER_PORT
+            value: "<Specify DB external PORT here>"
+          - name: DB_SERVER_DBNAME
+            value: "zabbix"
           - name: MYSQL_USER
             valueFrom:
              secretKeyRef:

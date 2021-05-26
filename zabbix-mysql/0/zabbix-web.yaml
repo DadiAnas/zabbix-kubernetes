@@ -94,7 +94,7 @@ spec:
           - name: ZBX_SERVER_PORT
             value: "<Specify ZX external PORT here>"
           - name: ZBX_SERVER_NAME
-            value: "Zabbix kubernetes"
+            value: "Zabbix server"
           - name: PHP_TZ
             value: "Africa/Casablanca"
           - name: DB_SERVER_USER

@@ -21,7 +21,7 @@ spec:
           claimName: zabbix-mysql-data-claim
       containers:
         - name: zabbix-db
-          image: mysql:5.7
+          image: mysql:8.0
           ports:
           - containerPort: 3306
             name: mysql
@@ -41,8 +41,6 @@ spec:
              secretKeyRef:
               name: db-secret
               key: db-root-pass
-          - name: MYSQL_DATABASE
-            value: "zabbix"
           volumeMounts:
            - mountPath: "/var/lib/mysql/"
              name: zabbix-mysql-data

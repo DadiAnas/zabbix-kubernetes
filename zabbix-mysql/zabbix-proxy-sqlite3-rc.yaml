@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: zabbix-proxy-sqlite3
-          image: zabbix/zabbix-proxy-sqlite3:alpine-5.2-latest
+          image: zabbix/zabbix-proxy-sqlite3:alpine-5.4-latest
           imagePullPolicy: Always
           ports:
           - containerPort: 10051

@@ -1,4 +1,21 @@
 apiVersion: v1
+kind: Service
+metadata:
+  name: zabbix-java-gateway
+  labels:
+    app: zabbix
+  namespace: zabbix
+spec:
+  ports:
+  - port: 10052
+    targetPort: 10052
+    name: zabbix-jmx
+  externalIPs:
+  - <Specify external IP here>
+  selector:
+    name: zabbix-java-gateway
+---
+apiVersion: v1
 kind: ReplicationController
 metadata:
   name: zabbix-java-gateway

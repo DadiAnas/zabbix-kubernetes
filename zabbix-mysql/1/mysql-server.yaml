@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-server
+  labels:
+    app: zabbix
+    tier: db
+  namespace: zabbix
+spec:
+  ports:
+  - port: 3306
+    targetPort: 3306
+    name: mysql-server
+  externalIPs:
+  - <Specify external IP here>
+  type: NodePort
+  selector:
+    name: mysql-server
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: zabbix-db-storage
+  labels:
+    type: local
+  namespace: zabbix
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/zabbix_db_storage"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: zabbix-db-storage-claim
+  namespace: zabbix
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: zabbix-db-storage
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+  labels:
+    app: mysql-server
+  namespace: zabbix
+data:
+  my.cnf: |-
+    [client]
+    default-character-set=utf8mb4
+
+    [mysql]
+    default-character-set=utf8mb4
+
+
+    [mysqld]
+    collation-server = utf8mb4_unicode_520_ci
+    init-connect='SET NAMES utf8mb4'
+    character-set-server = utf8mb4
+
+    secure-file-priv= NULL
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: mysql-server
+  labels:
+    app: zabbix
+    tier: mysql-server
+  namespace: zabbix
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: mysql-server
+        app: zabbix
+        tier: mysql-server
+    spec:
+      containers:
+        - name: zabbix-db
+          image: mysql:8.0
+          ports:
+          - containerPort: 3306
+            name: mysql
+          env:
+          - name: MYSQL_USER
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-user
+          - name: MYSQL_PASSWORD
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-zbx-pass
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+             secretKeyRef:
+              name: db-secret
+              key: db-root-pass
+          volumeMounts:
+           - mountPath: "/var/lib/mysql-files/"
+             name: zabbix-db-storage
+             readOnly: false
+           - mountPath: "/etc/mysql/my.cnf"
+             name: mysql-config
+             subPath: my.cnf
+      volumes:
+       - name: zabbix-db-storage
+         persistentVolumeClaim:
+          claimName: zabbix-db-storage-claim
+       - name: mysql-config
+         configMap:
+            name: mysql-config

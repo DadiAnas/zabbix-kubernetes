@@ -1,4 +1,71 @@
 apiVersion: v1
+kind: Service
+metadata:
+  name: zabbix-server
+  labels:
+    app: zabbix
+  namespace: zabbix
+spec:
+  ports:
+  - port: 10051
+    targetPort: 10051
+    name: zabbix-trapper
+  - port: 162
+    targetPort: 1162
+    protocol: UDP
+    name: snmp-trap
+  externalIPs:
+  - <Specify ZX external IP here>
+  selector:
+    name: zabbix-server
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: zabbix-server
+  namespace: zabbix
+spec:
+  scaleTargetRef:
+    apiVersion: v1
+    kind: ReplicationController
+    name: zabbix-server
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 70
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: zabbix-snmptraps-storage
+  labels:
+    type: local
+  namespace: zabbix
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /zbx_instance/snmptraps
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: zabbix-snmptraps-storage-claim
+  namespace: zabbix
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: zabbix-snmptraps-storage
+---
+apiVersion: v1
 kind: ReplicationController
 metadata:
   name: zabbix-server
@@ -64,21 +131,28 @@ spec:
           - name: ZBX_PROXYCONFIGFREQUENCY
             value: "60"
           volumeMounts:
-          - name: zabbix-db-storage
+          - name: zabbix-snmptraps-storage
             mountPath: /var/lib/zabbix/snmptraps/
             readOnly: true
         - name: zabbix-snmptraps
-          image: zabbix/zabbix-snmptraps:centos-5.4-latest
+          image: zabbix/zabbix-snmptraps:alpine-5.4-latest
           imagePullPolicy: Always
           ports:
           - containerPort: 1162
             protocol: UDP
             name: snmp-trap
           volumeMounts:
-          - name: zabbix-db-storage
+          - name: zabbix-snmptraps-storage
             mountPath: /var/lib/zabbix/snmptraps/
             readOnly: false
+          - name: zabbix-snmp-mibs
+            mountPath: /usr/share/snmp/mibs/
+            readOnly: true
       volumes:
-       - hostPath:
-          path: /zabbix/
-         name: zabbix-db-storage
+       - name: zabbix-snmptraps-storage
+         persistentVolumeClaim:
+          claimName: zabbix-snmptraps-storage-claim
+       - name: zabbix-snmp-mibs
+         hostPath:
+          path: /var/lib/zabbix/mibs
+         
