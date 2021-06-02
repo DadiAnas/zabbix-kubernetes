@@ -17,7 +17,7 @@ spec:
         - name: grafana
           image: monitoringartist/grafana-xxl
           command: ["sed"]
-          args: ["-i","-e 's/;allow_embedding = false/allow_embedding = true/' /etc/grafana/grafana.ini"]
+          args: ['-i -e "s/;allow_embedding = false/allow_embedding = true/" /etc/grafana/grafana.ini']
            # sed -i -e "s/;allow_embedding = false/allow_embedding = true/" /etc/grafana/grafana.ini
            # sed -i -e "s/;enabled = false/enabled = false/" /etc/grafana/grafana.ini
            # sed -i -e "s/;org_name = Main Org./org_name = Main Org./" /etc/grafana/grafana.ini
