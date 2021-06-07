@@ -27,8 +27,8 @@ spec:
     apiVersion: v1
     kind: ReplicationController
     name: mysql-server
-  minReplicas: 2
-  maxReplicas: 4
+  minReplicas: 1
+  maxReplicas: 1
   metrics:
   - type: Resource
     resource:
