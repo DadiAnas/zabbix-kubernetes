@@ -1,10 +1,10 @@
 
 # --- Deploy Zabbix ---
 # Create namespace in Kubernetes cluster.
-export namespace=$1 || zabbix
+export namespace=$1
 kubectl create namespace $namespace
 
-export hostIP=$2 || 10.242.148.48
+export hostIP=$2
 
 # Add Helm repo
 helm repo add cetic https://cetic.github.io/helm-charts
@@ -55,7 +55,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/zabbix"
+    path: "/mnt/zabbix_data"
 EOF
 
 kubectl expose deployments/zabbix-web -n $namespace --type=NodePort --name=zabbix-web-external --external-ip=$hostIP --port=80 --target-port=8080

@@ -1,8 +1,8 @@
-export Node_ip=$1 || 10.242.148.48
+export Node_ip=$1
 
-export elastic_namespace=$2 || elastic
-export zabbix_namespace=$3 || zabbix
-export grafana_namespace=$4 || grafana
+export elastic_namespace=$2
+export zabbix_namespace=$3
+export grafana_namespace=$4
 
 chmod +x elastic-helm/install.sh
 chmod +x zabbix/zabbix-helm/install.sh
@@ -33,4 +33,4 @@ Elastic: http://$Node_ip:5601/
 # kubectl delete ns $elastic_namespace
 # kubectl delete ns $zabbix_namespace
 # kubectl delete ns $grafana_namespace
-# kubectl delete pv pv-zabbix 
+# kubectl delete pv zabbix-pv 

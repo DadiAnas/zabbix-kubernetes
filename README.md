@@ -13,7 +13,7 @@ To sum it up:
 - Kubernetes Cluster
 - Helm package manager
 
-## Steps
+## Deployment
 
 If your environement match well the requirements, you can now easily deploy all the charts.
 
@@ -25,9 +25,9 @@ You just need to change Node_ip variable to match your configuration (IP address
     cd zabbix*kubernetes*
     chmod +x ./install-Zabbix-Efk-Grafana.sh
 
-    export elastic_namespace=elastic
-    export zabbix_namespace=zabbix
-    export grafana_namespace=grafana
+    export elastic_namespace=monitoring
+    export zabbix_namespace=monitoring
+    export grafana_namespace=monitoring
 
     ./install-Zabbix-Efk-Grafana.sh \
     $Node_ip \
@@ -36,5 +36,33 @@ You just need to change Node_ip variable to match your configuration (IP address
     $grafana_namespace
 
 After the installation, links to get access to the deployments will be printed.
+
+## Debug
+
+All installations are either still initializing or fully available. To inspect the status of these deployments run this watchs:
+
+    watch kubectl get all --namespace=$elastic_namespace
+    watch kubectl get all --namespace=$grafana_namespace
+    watch kubectl get all --namespace=$zabbix_namespace
+
+## Delete
+
+Uninstalling all charts may be result by deleting helm charts or by deleting namespaces:
+
+    helm uninstall elasticsearch -n $elastic_namespace
+    helm uninstall kibana -n $elastic_namespace
+    helm uninstall fluent-bit -n $elastic_namespace
+    helm uninstall zabbix -n $zabbix_namespace
+    helm uninstall grafana -n $grafana_namespace
+
+OR:
+
+    kubectl delete ns $elastic_namespace
+    kubectl delete ns $zabbix_namespace
+    kubectl delete ns $grafana_namespace
+
+To delete zabbix postgresql persistance volume:
+
+    kubectl delete pv zabbix-pv
 
 Enjoy.

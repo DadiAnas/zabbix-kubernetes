@@ -1,11 +1,11 @@
 #*** assure that you have a working kubernetes cluster and any helm version are well installed before executing this script ***
 
 # Create namespace
-export namespace=$1 || elastic
+export namespace=$1
 kubectl create namespace $namespace
 
 # Host ip to give access to external within it
-export hostIP=$2 || 10.242.148.48
+export hostIP=$2
 
 # --- Deploy ElasticSearch ---
 #'''

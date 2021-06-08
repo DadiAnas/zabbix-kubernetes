@@ -7,11 +7,11 @@ helm repo add grafana https://grafana.github.io/helm-charts
 
 
 # Create namespace
-export namespace=$1 || grafana
+export namespace=$1
 kubectl create namespace $namespace
 
 # set Node IP address to open external port in one of your cluster node (if loadbalancer not supported).
-export hostIP=$2 || 10.242.148.48
+export hostIP=$2
 
 # Change Chart values file
 echo "
