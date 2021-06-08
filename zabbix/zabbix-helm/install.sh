@@ -31,11 +31,12 @@ zabbixproxy:
 zabbixweb:
   image:
     tag: "ubuntu-5.4.0"
+
 " > $Home/zabbix-values.yaml
 
 # Install the Zabbix helm chart with a release name : zabbix-release
-helm upgrade zabbix cetic/zabbix \
--n zabbix \
+helm install zabbix cetic/zabbix --dependency-update \
+-n $namespace \
 -f $Home/zabbix-values.yaml
 
 
