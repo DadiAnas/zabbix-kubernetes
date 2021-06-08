@@ -16,16 +16,27 @@ helm repo update
 #helm show values cetic/zabbix > zabbix_values.yaml
 
 # Change the values according to the environment in the file zabbix_values.yaml.
+echo "
+zabbixServer:
+  hostIP: $hostIP
+  image:
+    tag: "centos-5.4.0"
+zabbixagent:
+  image:
+    tag: "centos-5.4.0"
+zabbixproxy:
+  image:
+    tag: "centos-5.4.0"
+zabbixweb:
+  image:
+    tag: "centos-5.4.0"
+
+" > $Home/zabbix-values.yaml
 
 # Install the Zabbix helm chart with a release name : zabbix-release
 helm install zabbix cetic/zabbix --dependency-update \
 -n $namespace \
---set zabbixServer.hostIP=$hostIP \
---set zabbixServer.image.tag="ubuntu-5.4.0" \
---set zabbixagent.image.tag="ubuntu-5.4.0" \
---set zabbixproxy.image.tag="ubuntu-5.4.0" \
---set zabbixweb.image.tag="ubuntu-5.4.0"
-#-f zabbix_values.yaml 
+-f $Home/zabbix-values.yaml
 
 
 # Create persistance volume for postgresql
@@ -45,6 +56,7 @@ spec:
     path: "/mnt/zabbix_data"
 EOF
 
+kubectl expose deployments/zabbix-web -n $namespace --type=NodePort --name=zabbix-web-external --external-ip=$hostIP --port=80 --target-port=8080
 
 # --- Verify Running Stack ---
 # All installations of Zabbix-server, Zabbix-web, Zabbix-proxy, PostgreSQL and Zabbix-web are either still initializing or fully available.

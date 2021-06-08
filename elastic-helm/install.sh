@@ -77,6 +77,9 @@ helm install kibana elastic/kibana \
 ### This NodePort exposes the logging to the outside world intentionally for demonstration purposes.
 ### However, for production Kubernetes clusters never expose the Kibana dashboard service to the world without any authentication.
 
+# expose port to extern
+kubectl expose deployments/kibana-kibana -n $namespace --type=NodePort --name=kibana-external --external-ip=$hostIP --port=5601 --target-port=5601
+
 
 # --- Verify Running Stack ---
 # All three installations of ElasticSearch, Fluent Bit, and Kibana are either still initializing or fully available.

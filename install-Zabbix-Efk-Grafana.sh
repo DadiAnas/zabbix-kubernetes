@@ -12,15 +12,8 @@ chmod +x grafana/helm-grafana/install.sh
 ./zabbix/zabbix-helm/install.sh $zabbix_namespace $Node_ip
 ./grafana/helm-grafana/install.sh $grafana_namespace $Node_ip
 
-echo "use this commands one by one"
-echo "kubectl edit -n $elastic_namespace svc/kibana-kibana" 
-echo "kubectl edit -n $zabbix_namespace svc/zabbix-web" 
-echo "and add to spec: 
-  externalIPs:
-   - $Node_ip
-"
 
-echo "After changing it you can have acces to :
+echo "
 Grafana: http://$Node_ip:3000/
 Zabbix: http://$Node_ip/
 Elastic: http://$Node_ip:5601/
@@ -30,7 +23,9 @@ Elastic: http://$Node_ip:5601/
 # All installations of grafana are either still initializing or fully available.
 # To inspect the status of these deployments run this watch.
 #watch kubectl get all --namespace=$elastic_namespace
-# Change namespace to see others.
+#watch kubectl get all --namespace=$grafana_namespace
+#watch kubectl get all --namespace=$zabbix_namespace
+
 
 #To uninstall 
 # kubectl delete ns $elastic_namespace

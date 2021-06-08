@@ -1,8 +1,8 @@
-# Zabbix, Grafana and EFK (ElasticSearch/Fluent-bit/Kibana) on Kubernetes
+# Deploy Zabbix, Grafana and EFK stack on Kubernetes
 
 ## Requirements
 
-In order to install all the charts: Zabbix, grafana and EFK stack on kubernetes, you must have a well configured kubernetes cluster.
+In order to install all the charts: Zabbix, grafana and EFK stack (ElasticSearch/Fluent-bit/Kibana) on kubernetes, you must have a well configured kubernetes cluster.
 
 In my case I am using a Kubernetes cluster that runing on Virtual Machines with VMware Photon Os in a VMware ESXI Server. If you need to install configure your own cluster using VMs with photon OS, you should have a look to git repo directory `kubeadm` you must find two scripts to install kubeadm on master node and other for workers.
 
@@ -13,21 +13,18 @@ To sum it up:
 - Kubernetes Cluster
 - Helm package manager
 
-# Steps
+## Steps
 
-If your environement match well the requirements, you can now easily install the charts.
+If your environement match well the requirements, you can now easily deploy all the charts.
 
-First step is to clone the repository, and go to the directory to make script executable, just copy paste the script below:
+You just need to change Node_ip variable to match your configuration (IP address of one of your cluster node), than paste it in your master node command line:
+
+    export Node_ip=10.242.148.48
 
     git clone https://github.com/DadiAnas/zabbix-kubernetes
     cd zabbix*kubernetes*
     chmod +x ./install-Zabbix-Efk-Grafana.sh
 
-after that, in the script below change variables than paste it in your master node command line:
-
-    # The IP address of one of your cluster node,
-    # to give access to external
-    export Node_ip=10.242.148.48
     export elastic_namespace=elastic
     export zabbix_namespace=zabbix
     export grafana_namespace=grafana
@@ -38,14 +35,6 @@ after that, in the script below change variables than paste it in your master no
     $zabbix_namespace \
     $grafana_namespace
 
-Than you have to follow some steps to give access to external to zabbix and elastic, if you are not using local cluster.
-The step will be printed, otherwise you must add
+After the installation, links to get access to the deployments will be printed.
 
-    externalIPs:
-    - <Node_ip >
-
-in spec in services to open external ports.
-
-After installation links to access the deployments will be printed.
-
-Enjoy your life.
+Enjoy.
