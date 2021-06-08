@@ -59,7 +59,7 @@ helm install kibana elastic/kibana \
 # --- Verify Running Stack ---
 # All three installations of ElasticSearch, Fluent Bit, and Kibana are either still initializing or fully available.
 # To inspect the status of these deployments run this watch.
-watch kubectl get deployments,pods,services --namespace=$namespace
+#watch kubectl get deployments,pods,services --namespace=$namespace
 
 # To delete chart you can use:
 # helm delete kibana -n $namespace

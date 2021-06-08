@@ -1,7 +1,7 @@
 
 # --- Deploy Zabbix ---
 # Create namespace in Kubernetes cluster.
-export namespace=$1 || monitoring
+export namespace=$1 || zabbix
 kubectl create namespace $namespace
 
 export hostIP=$2 || 10.242.148.48
@@ -49,7 +49,7 @@ EOF
 # --- Verify Running Stack ---
 # All installations of Zabbix-server, Zabbix-web, Zabbix-proxy, PostgreSQL and Zabbix-web are either still initializing or fully available.
 # To inspect the status of these deployments run this watch.
-watch kubectl get deployments,pods,services --namespace=$namespace
+#watch kubectl get deployments,pods,services --namespace=$namespace
 
 # kubectl edit svc/zabbix-web -n $namespace
 # kubectl edit svc/zabbix-server -n $namespace

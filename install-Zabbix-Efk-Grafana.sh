@@ -26,3 +26,14 @@ Zabbix: http://$Node_ip/
 Elastic: http://$Node_ip:5601/
 # If you are not using self-signed certificat you can change to https.
 "
+
+# All installations of grafana are either still initializing or fully available.
+# To inspect the status of these deployments run this watch.
+#watch kubectl get all --namespace=$elastic_namespace
+# Change namespace to see others.
+
+#To uninstall 
+# kubectl delete ns $elastic_namespace
+# kubectl delete ns $zabbix_namespace
+# kubectl delete ns $grafana_namespace
+# kubectl delete pv pv-zabbix 

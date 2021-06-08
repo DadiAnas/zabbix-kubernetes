@@ -96,7 +96,7 @@ kubectl get secret --namespace grafana grafana -o jsonpath="{.data.admin-passwor
 
 # All installations of grafana are either still initializing or fully available.
 # To inspect the status of these deployments run this watch.
-watch kubectl get all --namespace=$namespace
+#watch kubectl get all --namespace=$namespace
 
 # To delete :
 # helm delete grafana -n grafana
