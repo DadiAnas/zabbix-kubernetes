@@ -1,7 +1,7 @@
 #*** assure that you have a working kubernetes cluster and any helm version are well installed before executing this script ***
 
 # Create namespace
-export namespace=$1 || logs
+export namespace=$1 || elastic
 kubectl create namespace $namespace
 
 # --- Deploy ElasticSearch ---
