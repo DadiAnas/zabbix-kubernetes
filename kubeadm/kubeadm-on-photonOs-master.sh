@@ -57,5 +57,6 @@ echo $'export KUBECONFIG=$HOME/.kube/config' >> ~/.bash_login
 # Apply calico networking solution
 kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
 
+clear
 # Get join link command to paste on Worker Nodes it after installing kubeadm 
 kubeadm token create $(kubeadm token generate) --print-join-command --ttl=0
