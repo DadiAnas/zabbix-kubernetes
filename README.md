@@ -25,9 +25,9 @@ You just need to change Node_ip variable to match your configuration (IP address
     cd zabbix*kubernetes*
     chmod +x ./install-Zabbix-Efk-Grafana.sh
 
-    export elastic_namespace=monitoring
-    export zabbix_namespace=monitoring
-    export grafana_namespace=monitoring
+    export elastic_namespace=elastic
+    export zabbix_namespace=zabbix
+    export grafana_namespace=grafana
 
     ./install-Zabbix-Efk-Grafana.sh \
     $Node_ip \
