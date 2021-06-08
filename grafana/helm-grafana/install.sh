@@ -83,7 +83,7 @@ helm install grafana grafana/grafana \
 #   volumeName: grafana
 # EOF
 
-
+clear
 # Get 'admin' user password by running
 echo "Grafana admin password: "
 kubectl get secret --namespace grafana grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
