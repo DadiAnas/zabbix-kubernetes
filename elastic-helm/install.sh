@@ -1,7 +1,7 @@
 #*** assure that you have a working kubernetes cluster and any helm version are well installed before executing this script ***
 
 # Create namespace
-export namespace=logs
+export namespace=$1 | elastic
 kubectl create namespace $namespace
 
 # --- Deploy ElasticSearch ---
@@ -16,7 +16,7 @@ helm repo add elastic https://helm.elastic.co
 # Deploy the public Helm chart for ElasticSearch.
 helm install elasticsearch elastic/elasticsearch \
 --namespace=$namespace \
--f elastic-values.yaml \
+-f elastic-values.yaml 
 #--version=7.13.0 
 
 # --- Deploy Fluent Bit ---
@@ -34,7 +34,7 @@ helm install elasticsearch elastic/elasticsearch \
 helm repo add fluent https://fluent.github.io/helm-charts
 # Install the chart.
 helm install fluent-bit fluent/fluent-bit \
-  --namespace=$namespace \
+  --namespace=$namespace
  # --version 0.15.13 
 
 # --- Deploy Kibana ---
@@ -49,13 +49,21 @@ helm install fluent-bit fluent/fluent-bit \
 helm install kibana elastic/kibana \
   --namespace=$namespace \
   --set service.type=NodePort \
-  --set service.nodePort=31000 \
+  --set service.nodePort=31000 
   #--version=7.13.0 
 ### Security caution.  
 ### This NodePort exposes the logging to the outside world intentionally for demonstration purposes.
 ### However, for production Kubernetes clusters never expose the Kibana dashboard service to the world without any authentication.
 
+
 # --- Verify Running Stack ---
 # All three installations of ElasticSearch, Fluent Bit, and Kibana are either still initializing or fully available.
 # To inspect the status of these deployments run this watch.
 watch kubectl get deployments,pods,services --namespace=$namespace
+
+# To delete chart you can use:
+# helm delete kibana -n $namespace
+# helm delete fluent-bit -n $namespace
+# helm delete elasticsearch -n $namespace
+
+# Or just delete namespace if it does not contain any other deployments

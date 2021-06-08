@@ -1,7 +1,10 @@
-export hostIP=10.242.148.48
+
+# --- Deploy Zabbix ---
 # Create namespace in Kubernetes cluster.
-export namespace=monitoring
+export namespace=$1 | monitoring
 kubectl create namespace $namespace
+
+export hostIP=$2 | 10.242.148.48
 
 # Add Helm repo
 helm repo add cetic https://cetic.github.io/helm-charts
