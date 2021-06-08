@@ -4,6 +4,9 @@
 export namespace=$1 || elastic
 kubectl create namespace $namespace
 
+# Host ip to give access to external within it
+export hostIP=$2 || 10.242.148.48
+
 # --- Deploy ElasticSearch ---
 #'''
 # Elasticsearch is a RESTful search engine based on the Lucene library. 
