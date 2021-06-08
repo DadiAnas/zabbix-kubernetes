@@ -28,7 +28,7 @@ after that, in the script below change variables than paste it in your master no
     # The IP address of one of your cluster node,
     # to give access to external
     export Node_ip=10.242.148.48
-    export elastic_namespace=elastic
+    export elastic_namespace=logs
     export zabbix_namespace=zabbix
     export grafana_namespace=grafana
 

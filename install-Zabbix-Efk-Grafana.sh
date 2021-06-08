@@ -1,6 +1,6 @@
 export Node_ip=$1 || 10.242.148.48
 
-export elastic_namespace=$2 || elastic
+export elastic_namespace=$2 || logs
 export zabbix_namespace=$3 || zabbix
 export grafana_namespace=$4 || grafana
 

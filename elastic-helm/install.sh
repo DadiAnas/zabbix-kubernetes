@@ -1,7 +1,7 @@
 #*** assure that you have a working kubernetes cluster and any helm version are well installed before executing this script ***
 
 # Create namespace
-export namespace=$1 || elastic
+export namespace=$1 || logs
 kubectl create namespace $namespace
 
 # --- Deploy ElasticSearch ---
@@ -13,10 +13,32 @@ kubectl create namespace $namespace
 
 # Add the chart repository for the Helm chart to be installed.
 helm repo add elastic https://helm.elastic.co
+
+# Change Chart values file
+echo "
+# Permit co-located instances for solitary minikube virtual machines.
+antiAffinity: "soft"
+
+# Shrink default JVM heap.
+esJavaOpts: "-Xmx128m -Xms128m"
+
+# Allocate smaller chunks of memory per pod.
+resources:
+  requests:
+    cpu: "100m"
+    memory: "512M"
+  limits:
+    cpu: "1000m"
+    memory: "512M"
+
+persistence:
+  enabled: false
+" > $Home/elastic-values.yaml
+
 # Deploy the public Helm chart for ElasticSearch.
 helm install elasticsearch elastic/elasticsearch \
 --namespace=$namespace \
--f elastic-values.yaml 
+-f $Home/elastic-values.yaml 
 #--version=7.13.0 
 
 # --- Deploy Fluent Bit ---
