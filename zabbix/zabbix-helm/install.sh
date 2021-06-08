@@ -55,7 +55,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/zabbix_data"
+    path: "/zabbix_data"
 EOF
 
 kubectl expose deployments/zabbix-web -n $namespace --type=NodePort --name=zabbix-web-external --external-ip=$hostIP --port=80 --target-port=8080

@@ -44,7 +44,7 @@ sudo systemctl restart docker
 systemctl enable --now kubelet
 
 # Initialise Kubeadm
-kubeadm init -y
+kubeadm init 
 
 # Copy config file in order to be able to interacte with cluster
 mkdir -p $HOME/.kube
