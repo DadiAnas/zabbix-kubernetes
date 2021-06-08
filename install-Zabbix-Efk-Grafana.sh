@@ -28,6 +28,8 @@ Elastic: http://$Node_ip:5601/
 
 
 #To uninstall 
+
+# helm uninstall elasticsearch -n $elastic_namespace
 # kubectl delete ns $elastic_namespace
 # kubectl delete ns $zabbix_namespace
 # kubectl delete ns $grafana_namespace

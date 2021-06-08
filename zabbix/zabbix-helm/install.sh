@@ -20,16 +20,16 @@ echo "
 zabbixServer:
   hostIP: $hostIP
   image:
-    tag: "centos-5.4.0"
+    tag: "alpine-5.4.0"
 zabbixagent:
   image:
-    tag: "centos-5.4.0"
+    tag: "alpine-5.4.0"
 zabbixproxy:
   image:
-    tag: "centos-5.4.0"
+    tag: "alpine-5.4.0"
 zabbixweb:
   image:
-    tag: "centos-5.4.0"
+    tag: "alpine-5.4.0"
 
 " > $Home/zabbix-values.yaml
 
