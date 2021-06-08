@@ -47,6 +47,7 @@ metadata:
   name: zabbix-pv
   labels:
     type: local
+  namespace: $namespace
 spec:
   capacity:
     storage: 10Gi
