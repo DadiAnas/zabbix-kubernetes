@@ -18,7 +18,7 @@ helm repo update
 # Change the values according to the environment in the file zabbix_values.yaml.
 echo "
 zabbixServer:
-  replicaCount: 1
+  replicaCount: 2
   hostIP: $hostIP
   image:
     tag: "ubuntu-5.4.0"
@@ -31,7 +31,6 @@ zabbixproxy:
 zabbixweb:
   image:
     tag: "ubuntu-5.4.0"
-
 " > $Home/zabbix-values.yaml
 
 # Install the Zabbix helm chart with a release name : zabbix-release
