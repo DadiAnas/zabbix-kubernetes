@@ -20,16 +20,16 @@ echo "
 zabbixServer:
   hostIP: $hostIP
   image:
-    tag: "alpine-5.4.0"
+    tag: "ubuntu-5.4.0"
 zabbixagent:
   image:
-    tag: "alpine-5.4.0"
+    tag: "ubuntu-5.4.0"
 zabbixproxy:
   image:
-    tag: "alpine-5.4.0"
+    tag: "ubuntu-5.4.0"
 zabbixweb:
   image:
-    tag: "alpine-5.4.0"
+    tag: "ubuntu-5.4.0"
 
 " > $Home/zabbix-values.yaml
 
@@ -44,7 +44,7 @@ cat <<EOF | kubectl -n $namespace create -f -
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: pv-zabbix
+  name: zabbix-pv
   labels:
     type: local
 spec:
@@ -53,7 +53,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/zabbix_data"
+    path: "/mnt/zabbix"
 EOF
 
 kubectl expose deployments/zabbix-web -n $namespace --type=NodePort --name=zabbix-web-external --external-ip=$hostIP --port=80 --target-port=8080
