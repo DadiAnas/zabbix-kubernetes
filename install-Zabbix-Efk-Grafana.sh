@@ -1,8 +1,8 @@
-export Node_ip=$1 | 10.242.148.48
+export Node_ip=$1 || 10.242.148.48
 
-export elastic_namespace=$2 | elastic
-export zabbix_namespace=$3 | zabbix
-export grafana_namespace=$4 | grafana
+export elastic_namespace=$2 || elastic
+export zabbix_namespace=$3 || zabbix
+export grafana_namespace=$4 || grafana
 
 chmod +x elastic-helm/install.sh
 chmod +x zabbix/zabbix-helm/install.sh
