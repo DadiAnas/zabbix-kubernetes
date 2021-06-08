@@ -8,7 +8,7 @@ chmod +x elastic-helm/install.sh
 chmod +x zabbix/zabbix-helm/install.sh
 chmod +x grafana/helm-grafana/install.sh
 
-./elastic-helm/install.sh $elastic_namespace
+./elastic-helm/install.sh $elastic_namespace $Node_ip
 ./zabbix/zabbix-helm/install.sh $zabbix_namespace $Node_ip
 ./grafana/helm-grafana/install.sh $grafana_namespace $Node_ip
 
