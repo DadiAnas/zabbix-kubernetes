@@ -51,7 +51,7 @@ After the installation, links to get access to the deployments will be printed.
 
 Change the IP address below with the ip of one of your kubernetes cluster nodes, then run the command.
 
-    curl -s https://raw.githubusercontent.com/DadiAnas/zabbix-kubernetes/main/install.sh | bash 10.242.148.48 elastic zabbix grafana
+    curl -s https://raw.githubusercontent.com/DadiAnas/zabbix-kubernetes/main/install.sh | bash -s 10.242.148.48 elastic zabbix grafana
 
 You could change namespaces names(elastic zabbix grafana), but it's totaly optional.
 
