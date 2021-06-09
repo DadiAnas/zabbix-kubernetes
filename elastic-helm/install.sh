@@ -81,6 +81,8 @@ kubectl expose svc/fluent-bit -n $namespace --type=NodePort --name=fluent-bit-ex
 # Deploy Kibana. The service will be on a NodePort at 31000.
 helm install kibana elastic/kibana \
   --namespace=$namespace \
+  --set healthCheckPath="/api/status" \
+  --set replicas=2
   #--version=7.13.0 
 ### Security caution.  
 ### This NodePort exposes the logging to the outside world intentionally for demonstration purposes.
