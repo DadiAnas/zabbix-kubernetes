@@ -1,5 +1,13 @@
 # Deploy Zabbix, Grafana and EFK stack on Kubernetes
 
+## Screen shots
+
+![zabbix](https://github.com/DadiAnas/zabbix-kubernetes/raw/main/images/zabbix.png)
+
+![grafana](https://github.com/DadiAnas/zabbix-kubernetes/raw/main/images/grafana.png)
+
+![kibana](https://github.com/DadiAnas/zabbix-kubernetes/raw/main/images/kibana.png)
+
 ## Requirements
 
 In order to install all the charts: Zabbix, grafana and EFK stack (ElasticSearch/Fluent-bit/Kibana) on kubernetes, you must have a well configured kubernetes cluster.
