@@ -44,6 +44,10 @@ helm install elasticsearch elastic/elasticsearch \
 -f $Home/elastic-values.yaml 
 #--version=7.13.0 
 
+# expose ElasticSearch API port to extern
+kubectl expose svc/elasticsearch-master -n $namespace --type=NodePort --name=elastic-api-external --external-ip=$hostIP --port=9200 --target-port=9200
+
+
 # --- Deploy Fluent Bit ---
 # '''
 # Fluent Bit is an open source specialized data collector.
@@ -62,6 +66,10 @@ helm install fluent-bit fluent/fluent-bit \
   --namespace=$namespace
  # --version 0.15.13 
 
+# expose fluent-bit to external
+kubectl expose svc/fluent-bit -n $namespace --type=NodePort --name=fluent-bit-external --external-ip=$hostIP --port=2020 --target-port=2020
+
+
 # --- Deploy Kibana ---
 
 # '''
@@ -73,15 +81,13 @@ helm install fluent-bit fluent/fluent-bit \
 # Deploy Kibana. The service will be on a NodePort at 31000.
 helm install kibana elastic/kibana \
   --namespace=$namespace \
-  --set service.type=NodePort \
-  --set service.nodePort=31000 
   #--version=7.13.0 
 ### Security caution.  
 ### This NodePort exposes the logging to the outside world intentionally for demonstration purposes.
 ### However, for production Kubernetes clusters never expose the Kibana dashboard service to the world without any authentication.
 
 # expose port to extern
-kubectl expose deployments/kibana-kibana -n $namespace --type=NodePort --name=kibana-external --external-ip=$hostIP --port=5601 --target-port=5601
+kubectl expose svc/kibana-kibana -n $namespace --type=NodePort --name=kibana-external --external-ip=$hostIP --port=5601 --target-port=5601
 
 
 # --- Verify Running Stack ---

@@ -16,7 +16,9 @@ chmod +x grafana/helm-grafana/install.sh
 echo "
 Grafana: http://$Node_ip:3000/
 Zabbix: http://$Node_ip/
-Elastic: http://$Node_ip:5601/
+Kibana: http://$Node_ip:5601/
+Fluent-bit: http://$Node_ip:2020/
+ElasticSearch: http://$Node_ip:9200/
 # If you are not using self-signed certificat you can change to https.
 "
 

@@ -59,6 +59,8 @@ spec:
 EOF
 
 kubectl expose deployments/zabbix-web -n $namespace --type=NodePort --name=zabbix-web-external --external-ip=$hostIP --port=80 --target-port=8080
+kubectl expose po/zabbix-0 -n $namespace --type=NodePort --name=zabbix-server-agent-external --external-ip=$hostIP --port=10051 --target-port=10051
+kubectl expose po/zabbix-0 -n $namespace --type=NodePort --name=zabbix-gateway-external --external-ip=$hostIP --port=10052 --target-port=10052
 
 # --- Verify Running Stack ---
 # All installations of Zabbix-server, Zabbix-web, Zabbix-proxy, PostgreSQL and Zabbix-web are either still initializing or fully available.
