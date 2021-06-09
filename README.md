@@ -17,6 +17,8 @@ To sum it up:
 
 If your environement match well the requirements, you can now easily deploy all the charts.
 
+### Method 1
+
 You just need to change Node_ip variable to match your configuration (IP address of one of your cluster node), than paste it in your master node command line:
 
     export Node_ip=10.242.148.48
@@ -36,6 +38,10 @@ You just need to change Node_ip variable to match your configuration (IP address
     $grafana_namespace
 
 After the installation, links to get access to the deployments will be printed.
+
+### Method 2
+
+One line installation command :), change the ip with the ip of one of your cluster nodes, then you can change namespaces if you want, it's optional.
 
 ## Debug
 
