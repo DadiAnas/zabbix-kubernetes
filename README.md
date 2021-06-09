@@ -39,9 +39,13 @@ You just need to change Node_ip variable to match your configuration (IP address
 
 After the installation, links to get access to the deployments will be printed.
 
-### Method 2
+### Method 2: One line command :)
 
-One line installation command :), change the ip with the ip of one of your cluster nodes, then you can change namespaces if you want, it's optional.
+Change the IP address below with the ip of one of your kubernetes cluster nodes, then run the command.
+
+    curl -s https://raw.githubusercontent.com/DadiAnas/zabbix-kubernetes/main/install.sh | bash 10.242.148.48 elastic zabbix grafana
+
+You could change namespaces names(elastic zabbix grafana), but it's totaly optional.
 
 ## Debug
 
