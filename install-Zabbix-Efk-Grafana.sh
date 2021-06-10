@@ -4,9 +4,9 @@ export elastic_namespace=$2
 export zabbix_namespace=$3
 export grafana_namespace=$4
 
-chmod +x elastic-helm/install.sh
-chmod +x zabbix/zabbix-helm/install.sh
-chmod +x grafana/helm-grafana/install.sh
+chmod +x elastic-helm/efk.sh
+chmod +x zabbix/zabbix-helm/zabbix.sh
+chmod +x grafana/helm-grafana/grafana.sh
 
 cp ./grafana/helm-grafana/dashboard.json $Home/dashboard.json
 
