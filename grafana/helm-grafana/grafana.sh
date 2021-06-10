@@ -15,7 +15,7 @@ export hostIP=$2
 
 # Change Chart values file
 echo "
-replicas: 1
+replicas: 2
 image:
   tag: 7.4.5 
 service:
@@ -30,21 +30,16 @@ grafana.ini:
     enabled: true
 plugins:
 - alexanderzobnin-zabbix-app
-# extraVolumeMounts:
-# - name: plugins
-#   mountPath: /var/lib/grafana/plugins
-#   subPath: configs/grafana/plugins
-#   existingClaim: grafana
-#   readOnly: false
-# - name: dashboards
-#   mountPath: /var/lib/grafana/dashboards
-#   hostPath: /grafana/dashboards
-#   readOnly: false
-# persistence:
-#   enabled: true
-#   type: pvc
-#   size: 10Gi
-#   existingClaim: grafana
+persistence:
+  enabled: true
+  type: pvc
+  size: 10Gi
+  existingClaim: grafana
+dashboards:
+  defaults:
+    custom-dashboard:
+      file: $Home/dashboard.yaml
+
 " > $Home/grafana_values.yaml
 
 # To install the chart with the release name grafana:
@@ -52,36 +47,36 @@ helm install grafana grafana/grafana \
 -n $namespace \
 -f $Home/grafana_values.yaml
 
-# Create persistance volume for grafana
-# cat <<EOF | kubectl -n $namespace create -f - 
-# kind: PersistentVolume
-# apiVersion: v1
-# metadata:
-#   name: grafana
-#   labels:
-#     type: local
-#   namespace: $namespace
-# spec:
-#   capacity:
-#     storage: 10Gi
-#   accessModes:
-#     - ReadWriteOnce
-#   hostPath:
-#     path: "/grafana"
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: grafana
-#   namespace: $namespace
-# spec:
-#   accessModes:
-#     - ReadWriteMany
-#   resources:
-#     requests:
-#       storage: 10Gi
-#   volumeName: grafana
-# EOF
+Create persistance volume for grafana
+cat <<EOF | kubectl -n $namespace create -f - 
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: grafana
+  labels:
+    type: local
+  namespace: $namespace
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/grafana_data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana
+  namespace: $namespace
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: grafana
+EOF
 
 clear
 # Get 'admin' user password by running
