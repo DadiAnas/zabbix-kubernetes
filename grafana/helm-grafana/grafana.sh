@@ -34,12 +34,10 @@ persistence:
   enabled: true
   type: pvc
   size: 10Gi
-  existingClaim: grafana
 dashboards:
   defaults:
-    custom-dashboard:
-      file: $Home/dashboard.yaml
-
+    local-dashboard:
+      url: https://raw.githubusercontent.com/DadiAnas/zabbix-kubernetes/main/grafana/helm-grafana/dashboard.json
 " > $Home/grafana_values.yaml
 
 # To install the chart with the release name grafana:
@@ -47,8 +45,8 @@ helm install grafana grafana/grafana \
 -n $namespace \
 -f $Home/grafana_values.yaml
 
-Create persistance volume for grafana
-cat <<EOF | kubectl -n $namespace create -f - 
+#Create persistance volume for grafana
+cat <<EOF | kubectl -n grafana create -f - 
 kind: PersistentVolume
 apiVersion: v1
 metadata:
@@ -63,19 +61,6 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/grafana_data"
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: grafana
-  namespace: $namespace
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 10Gi
-  volumeName: grafana
 EOF
 
 clear
