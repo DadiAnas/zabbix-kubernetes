@@ -34,10 +34,6 @@ persistence:
   enabled: true
   type: pvc
   size: 10Gi
-dashboards:
-  defaults:
-    local-dashboard:
-      url: https://raw.githubusercontent.com/DadiAnas/zabbix-kubernetes/main/grafana/helm-grafana/dashboard.json
 " > $Home/grafana_values.yaml
 
 # To install the chart with the release name grafana:
